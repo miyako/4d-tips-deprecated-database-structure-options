@@ -51,3 +51,7 @@ If (OK=1)
 	DOM CLOSE XML($dom)
 End if 
 ```
+
+you need to restart the project for catalog changes to take place.
+
+[RELOAD PROJECT](https://doc.4d.com/4Dv19/4D/19.6/RELOAD-PROJECT.301-6270050.en.html) does not work for the catalog.
