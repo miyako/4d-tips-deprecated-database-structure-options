@@ -31,4 +31,4 @@ despite the above quoted documentation, neither the warning nor error is include
 
 use the new [enhanced Xpath support](https://blog.4d.com/enhanced-xpath-support/) to update the catalog.
 
-to check if standard Xpath is enabled or not: [is_xpath_enabled](https://github.com/miyako/4d-tips-deprecated-database-structure-options/blob/6a5b7189f12a2e48d9f48ea313fed6a2d27655e5/example.4dbase/Project/Sources/Methods/is_xpath_enabled.4dm)
+to check if standard Xpath is enabled or not: [is_xpath_enabled](example.4dbase/Project/Sources/Methods/is_xpath_enabled.4dm)
