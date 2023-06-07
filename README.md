@@ -1,4 +1,4 @@
-# 4d-tips-reject-null-everywhere
+# 4d-tips-deprecated-database-structure-options
 set the reject null property on all fields
 
 The following database structure options are deprecated and will be edited or generate errors in the project conversion log file. 
