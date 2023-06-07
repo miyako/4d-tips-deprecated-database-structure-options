@@ -16,5 +16,13 @@ in this binary database we have a couple of mandatory fields
 
 <img width="440" alt="" src="https://github.com/miyako/4d-tips-deprecated-database-structure-options/assets/1725068/91347b41-617c-469a-86bf-140772524a45">
 
-after conversion to project, a log file is generated
+after conversion to project, a [log file](https://github.com/miyako/4d-tips-deprecated-database-structure-options/blob/main/example.4dbase/Logs/Conversion%202023-06-07T11-18-06.json) is generated
 
+despite the above quoted documentation, neither the warning nor error is included in the log file.
+
+```json
+{
+	"messages": [],
+	"success": true
+}
+```
