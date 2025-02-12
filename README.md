@@ -50,9 +50,59 @@ If (OK=1)
 	End for 
 	DOM EXPORT TO FILE($dom; $catalogFile.platformPath)
 	DOM CLOSE XML($dom)
+	RESTART 4D
 End if 
 ```
 
 you need to restart the project for catalog changes to take place.
 
 [RELOAD PROJECT](https://doc.4d.com/4Dv19/4D/19.6/RELOAD-PROJECT.301-6270050.en.html) does not work for the catalog.
+
+## Update
+
+the information is now reported in the conversion log. see https://discuss.4d.com/t/field-mandatory/27736/8?u=keisuke_miyako
+
+alternative code
+
+```4d
+var $logs : Collection
+$logs:=Folder(fk logs folder).files().query("name == :1 and extension == :2"; "Conversion@"; ".json").orderBy("name desc")
+
+If ($logs.length#0)
+	var $log : Object
+	$log:=JSON Parse($logs.first().getText(); Is object)
+	var $items; $lines : Collection
+	$items:=$log.messages.query("message == :1"; "No more supported 'mandatory' attribute in project found on field@")
+	$lines:=[]
+	ARRAY LONGINT($pos; 0)
+	ARRAY LONGINT($len; 0)
+	var $item : Object
+	var $message; $tableName; $fieldName : Text
+	For each ($item; $items)
+		$message:=$item.message
+		If (Match regex("field '([^']+)'.+?table '([^']+)'"; $message; 1; $pos; $len))
+			$tableName:=Substring($message; $pos{2}; $len{2})
+			$fieldName:=Substring($message; $pos{1}; $len{1})
+			$lines.push({tableName: $tableName; fieldName: $fieldName})
+		End if 
+	End for each 
+End if 
+
+ASSERT(is_xpath_enabled)
+
+var $catalogFile : 4D.File
+$catalogFile:=File("/SOURCES/catalog.4DCatalog")
+var $dom : Text
+$dom:=DOM Parse XML source($catalogFile.platformPath)
+If (OK=1)
+	var $line : Object
+	For each ($line; $lines)
+		$field:=DOM Find XML element($dom; "/base/table[@name='"+$line.tableName+"']/field[@name='"+$line.fieldName+"']")
+		DOM SET XML ATTRIBUTE($field; "not_null"; True)
+		DOM SET XML ATTRIBUTE($field; "never_null"; False)
+	End for each 
+	DOM EXPORT TO FILE($dom; $catalogFile.platformPath)
+	DOM CLOSE XML($dom)
+	RESTART 4D
+End if 
+```
