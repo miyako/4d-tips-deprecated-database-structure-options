@@ -45,7 +45,8 @@ If (OK=1)
 	For ($i; 1; Size of array($madatory_fields))
 		$madatory_field:=$madatory_fields{$i}
 		$field:=DOM Find XML element($madatory_field; "../")
-		DOM SET XML ATTRIBUTE($field; "not_null"; True)
+		DOM SET XML ATTRIBUTE($field; "not_null"; False)
+		DOM SET XML ATTRIBUTE($field; "never_null"; True)
 	End for 
 	DOM EXPORT TO FILE($dom; $catalogFile.platformPath)
 	DOM CLOSE XML($dom)
